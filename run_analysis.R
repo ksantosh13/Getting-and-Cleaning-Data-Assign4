@@ -64,9 +64,11 @@ names(newDataFrame)<-gsub("Gyro", "Gyroscope", names(newDataFrame))
 names(newDataFrame)<-gsub("Mag", "Magnitude", names(newDataFrame))
 names(newDataFrame)<-gsub("BodyBody", "Body", names(newDataFrame))
 
+# using library reshape2 and gettingusing melt function, furthering using dcast function to get final data
 library(reshape2)
 moltenDataFrame <- melt(newDataFrame, id = c("Subject", "Activity"))
 tidyFrame <- dcast(moltenDataFrame, formula = Subject + Activity ~ variable,
                    fun.aggregate = mean)
+# writing datatable into file
 write.table(tidyFrame, file = "tidydata.txt",row.name=FALSE)
 rm(moltenDataFrame)
